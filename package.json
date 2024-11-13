@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc-watch --onSuccess \"node ./lib/index.js\""
   },
   "keywords": [],
   "author": "Adauto Marques",
@@ -16,6 +17,7 @@
     "@tsconfig/recommended": "^1.0.8",
     "@types/express": "^5.0.0",
     "@types/node": "^22.9.0",
+    "tsc-watch": "^6.2.1",
     "typescript": "^5.6.3"
   }
 }
