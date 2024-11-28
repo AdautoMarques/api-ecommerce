@@ -24,7 +24,7 @@ export class UsersController {
     }
   }
 
-  static async getById(req: Request, res: Response) {
+  static async getById(req: Request, res: Response, next: NextFunction) {
     try {
       let userId = req.params.id;
       const doc = await getFirestore().collection("users").doc(userId).get();
@@ -34,11 +34,11 @@ export class UsersController {
       };
       res.send(user);
     } catch (error) {
-      res.status(500).send({ message: "Erro interno do servidor" });
+      next(error);
     }
   }
 
-  static async save(req: Request, res: Response) {
+  static async save(req: Request, res: Response, next: NextFunction) {
     try {
       let user = req.body;
       const userSalvo = await getFirestore().collection("users").add(user);
@@ -47,13 +47,11 @@ export class UsersController {
         .status(201)
         .send({ message: `Usuário ${userSalvo.id} salvo com sucesso` });
     } catch (error) {
-      res.status(500).send({
-        message: "Erro Interno do servidor",
-      });
+      next(error);
     }
   }
 
-  static update(req: Request, res: Response) {
+  static update(req: Request, res: Response, next: NextFunction) {
     try {
       let userId = req.params.id;
       let user = req.body as User;
@@ -67,22 +65,18 @@ export class UsersController {
         message: "Usuario alterado com sucesso",
       });
     } catch (error) {
-      res.status(500).send({
-        message: "Erro interno do servidor",
-      });
+      next(error);
     }
   }
 
-  static async delete(req: Request, res: Response) {
+  static async delete(req: Request, res: Response, next: NextFunction) {
     try {
       let userId = req.params.id;
       await getFirestore().collection("users").doc(userId).delete();
 
       res.status(204).end();
     } catch (error) {
-      res.status(500).send({
-        message: "Erro interno do servidor",
-      });
+      next(error);
     }
   }
 }
